@@ -11,7 +11,7 @@
           system = builtins.replaceStrings [ "darwin" ] [ "linux" ] system;
         };
       in {
-        packages.default = pkgs.pkgsCross.raspberryPi.stdenv.mkDerivation {
+        packages.default = pkgs.pkgsCross.raspberryPi.clangStdenv.mkDerivation {
           name = "demonstrate-lib64-rpath";
           src = ./.;
 
