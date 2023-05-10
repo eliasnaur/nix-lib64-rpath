@@ -8,15 +8,16 @@
     utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
-          system = builtins.replaceStrings [ "darwin" ] [ "linux" ] system;
+          inherit system;
         };
       in {
-        packages.default = pkgs.pkgsCross.raspberryPi.clangStdenv.mkDerivation {
+        packages.default = pkgs.pkgsCross.raspberryPi.pkgsMusl.stdenv.mkDerivation {
           name = "demonstrate-lib64-rpath";
           src = ./.;
 
           buildPhase = ''
             echo "CC" $CC
+            echo "NIX_COREFOUNDATION_RPATH": $NIX_COREFOUNDATION_RPATH
             echo "NIX_LDFLAGS:" $NIX_LDFLAGS
           '';
 
